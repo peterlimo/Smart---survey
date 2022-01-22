@@ -1,9 +1,5 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,9 +10,8 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
     <?php
-    require("../connection.php");
+    $conn = mysqli_connect("localhost","root","","ftogether");
     if (isset($_POST['submit'])) {
         $program_id = 1;
         $quiz = $_POST['quiz'];
@@ -24,17 +19,13 @@ session_start();
         $group_id =  $_POST['group_id'];
         $section_id =$_POST['question_section'];
         $group_type= $_POST['group_type'];
-        $sql = "INSERT INTO `quiz` (`quiz_id`,`section_id`,`program_id`,`group_id`,`quiz`, `type`, `group_type`) VALUES (NULL,'$section_id','$program_id','$group_id','$quiz','$answerType','$group_type');";
-        $query = mysqli_query($conn, $sql);
-        if ($query) {
-            $last_id = mysqli_insert_id($conn);
-            echo $last_id;
-        }
+        $sql = "insert into `quiz` (`quiz_id`,`section_id`,`program_id`,`group_id`,`quiz`, `type`, `group_type`) values (NULL,'$section_id','$program_id','$group_id','$quiz','$answerType','$group_type');";
+        $query = mysqli_query($conn,$sql);
+        $last_id = mysqli_insert_id($conn);
+        
         $counter = $_POST['counter'];
         $count = intval($counter);
-        if ($answerType == "input") {
-            echo "Your quiz for input type has been submitted successfully";
-        } else {
+    
             for ($x = 1; $x <= $count; $x++) {
                 $val = $_POST['choice' . $x];
                 $choiceInsert = "INSERT INTO `choices` (`id`, `quiz_id`, `choice`) VALUES (NULL, '$last_id','$val');";
@@ -42,9 +33,10 @@ session_start();
                 if ($choiceQuery) {
                     echo "Records inserted successfully";
                 }
-            }
+            
         }
-    }
+    
+}
     ?>
 </head>
 
@@ -156,9 +148,8 @@ session_start();
 
             <div class="form-group">
 
-                <div class="row" obj>
-                    <div class="col-lg-12" id="obj">
-                    </div>
+                <div class="row" id="obj">
+      
                 </div>
 
             </div>
@@ -212,7 +203,7 @@ session_start();
         document.getElementById('counter').innerText = counter;
 
 
-        var html = '<div class="col-lg-12">' +
+        var html = '<div class="col-lg-3 col-md-3">' +
             '<input type="text" id="objective"  placeholder="Choice' + counter + '"' +
             'class="form-control" autocomplete="objective" name="choice' + counter + '"' +
             '> <span class="text-red" onclick="remove()">remove</span>' +
