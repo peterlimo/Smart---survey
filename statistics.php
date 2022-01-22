@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="createQuiz.php">Creat Quiz</a>
+                        <a class="nav-link" href="createQuiz.php">Create Quiz</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="fTogetherQuiz.php">Answer Quiz</a>
+                        <a class="nav-link" href="categories.php">Answer Quiz</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="statistics.php">Statistics</a>

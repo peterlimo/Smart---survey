@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <?php
-    require("connection.php");
+    require("../connection.php");
     if (isset($_POST['submit'])) {
 
         $quiz = $_POST['quiz'];
@@ -63,6 +66,24 @@
                 </ul>
             </div>
         </nav>
+
+        <div class="row">
+        <div class="col-lg-2">
+                <a href="checkbox.php">Check Box</a>
+            </div>
+            <div class="col-lg-2">
+                <a href="radiobutton.php">Radio Buttons</a>
+            </div>
+            <div class="col-lg-2">
+                <a href="normalinput.php">Normal Input</a>
+            </div>
+            <div class="col-lg-2">
+                <a href="groupquiz.php">Group Question</a>
+            </div>
+            <div class="col-lg-2">
+                <a href="createGroup.php">Create group</a>
+            </div>
+        </div>
         <div class="row">
             <h5>Normal Question</h5>
         </div>
@@ -73,17 +94,16 @@
                 <label for="exampleInputEmail1">Question</label>
                 <input type="text" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Question" name="quiz">
             </div>
-
             <div id="defaultanswertype">
-            <div class="form-group mt-4" id="choose_answer_type">
-                <label for="exampleInputPassword1">Answer type</label><br>
-                <select name="answerType" class="form-select form-select-lg mb-3 mt-2" aria-label=".form-select-md example" id="aswerType">
-                    <option selected>select type</option>
-                    <option value="checkbox" id="multi-choice">MultiChoice(Checkbox)</option>
-                    <option value="radio" id="single-choice">SingleChoice(Radio Buttons)</option>
-                    <option value="input" id="input-box">Input box</option>
-                </select>
-            </div>
+                <div class="form-group mt-4" id="choose_answer_type">
+                    <label for="exampleInputPassword1">Answer type</label><br>
+                    <select name="answerType" class="form-select form-select-lg mb-3 mt-2" aria-label=".form-select-md example" id="aswerType">
+                        <option selected>select type</option>
+                        <option value="checkbox" id="multi-choice">MultiChoice(Checkbox)</option>
+                        <option value="radio" id="single-choice">SingleChoice(Radio Buttons)</option>
+                        <option value="input" id="input-box">Input box</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
@@ -112,15 +132,15 @@
             </div>
 
             <div id="defaultanswertype">
-            <div class="form-group mt-4" id="choose_answer_type">
-                <label for="exampleInputPassword1">Answer type</label><br>
-                <select name="answerType" class="form-select form-select-lg mb-3 mt-2" aria-label=".form-select-md example" id="aswerType">
-                    <option selected>select type</option>
-                    <option value="checkbox" id="multi-choice">MultiChoice(Checkbox)</option>
-                    <option value="radio" id="single-choice">SingleChoice(Radio Buttons)</option>
-                    <option value="input" id="input-box">Input box</option>
-                </select>
-            </div>
+                <div class="form-group mt-4" id="choose_answer_type">
+                    <label for="exampleInputPassword1">Answer type</label><br>
+                    <select name="answerType" class="form-select form-select-lg mb-3 mt-2" aria-label=".form-select-md example" id="aswerType">
+                        <option selected>select type</option>
+                        <option value="checkbox" id="multi-choice">MultiChoice(Checkbox)</option>
+                        <option value="radio" id="single-choice">SingleChoice(Radio Buttons)</option>
+                        <option value="input" id="input-box">Input box</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
@@ -138,7 +158,6 @@
     </div>
 </body>
 <script>
-
     function remove() {
         var element = document.getElementById('obj');
         var counter = document.getElementById('counter').innerText;
