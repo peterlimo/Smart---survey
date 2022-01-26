@@ -77,23 +77,23 @@ session_start();
 
         <div class="row">
         <div class="col-lg-2">
-                <a href="checkbox.php">Check Box</a>
+                <a class="btn btn-primary" href="checkbox.php">Check Box</a>
             </div>
             <div class="col-lg-2">
-                <a href="radiobutton.php">Radio Buttons</a>
+                <a class="btn btn-primary" href="radiobutton.php">Radio Buttons</a>
             </div>
             <div class="col-lg-2">
-                <a href="normalinput.php">Normal Input</a>
+                <a class="btn btn-primary" href="normalinput.php">Normal Input</a>
             </div>
             <div class="col-lg-2">
-                <a href="groupquiz.php">Group Question</a>
+                <a class="btn btn-primary" href="groupquiz.php">Group Question</a>
             </div>
             <div class="col-lg-2">
-                <a href="createGroup.php">Create group</a>
+                <a class="btn btn-primary" href="createGroup.php">Create group</a>
             </div>
         </div>
-        <div class="row">
-            <h5>Create a CheckBox Question.</h5>
+        <div class="row mt-5">
+            <h5>Multichoice Question(Checkbox).</h5>
         </div>
         <form action="checkbox.php" method="post">
             <span class="collapse" id="counter">0</span>
@@ -122,9 +122,8 @@ session_start();
                 </div>
             </div>
             <div class="form-group mt-4">
-                <div class="row">
-                    <div class="col-lg-12" id="obj">
-                    </div>
+                <div class="row" id="obj">
+ 
                 </div>
             </div>
 
@@ -168,10 +167,10 @@ session_start();
         document.getElementById('counter').innerText = counter;
 
 
-        var html = '<div class="col-lg-12">' +
+        var html = '<div class="col-lg-3 col-md-3">' +
             '<input type="text" id="objective"  placeholder="Choice ' + counter + '"' +
             'class="form-control" autocomplete="objective" name="choice' + counter + '"' +
-            '> <span class="text-red" onclick="remove()">remove</span>' +
+            '><span class="btn btn-danger" onclick="remove()">remove</span>' +
             '</div>'
         inputC.setAttribute('value', counter);
 

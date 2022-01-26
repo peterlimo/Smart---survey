@@ -124,23 +124,22 @@ if(!$_COOKIE["respondent_id"]) {
                         $sql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', '$dt', '$dt','NA')";
                         mysqli_query($conn, $sql);
                     }
-                } else if ($quizType == "radio") {
-                    $otherData ="select * from choices where quiz_id=" .$likert['quiz_id'];
-                    $otherQ = mysqli_query($conn,$otherData);
-                    $otherRow = mysqli_fetch_array($otherQ);
-                    if($otherRow['choice'] == "Other")
-                    {
+                }
+                 else if ($quizType == "radio") {
+                    // $otherData ="select * from choices where quiz_id=" .$likert['quiz_id'];
+                    // $otherQ = mysqli_query($conn,$otherData);
+                    // $otherRow = mysqli_fetch_array($otherQ);
+                    // if($otherRow['choice_type'] == "Other"){
                         $oData = $_POST[$likert['quiz_id']];
                         $oSql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', 'NA','$oData','NA')";
                         mysqli_query($conn, $oSql);
-                    }
-                    else {
-                    $mdata = $_POST[$likert['quiz_id']];
-                    $msql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', 'NA','$mdata','NA')";
-                    mysqli_query($conn, $msql);
-                    }
+                    // }else if($otherRow['choice_type'] == "NA"){
+                    // $mdata = $_POST[$likert['quiz_id']];
+                    // $msql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', 'NA','$mdata','NA')";
+                    // mysqli_query($conn, $msql);
+                    // }
                    
-                } else if ($quizType == "input") {
+                }else if ($quizType == "input") {
                     $inputData = $_POST[$likert['quiz_id']];
                     $inputSql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', 'NA','$inputData','NA')";
                     mysqli_query($conn, $inputSql);
@@ -148,13 +147,13 @@ if(!$_COOKIE["respondent_id"]) {
 
                 else if ($quizType == "location") {
                     $locationData = $_POST['location'];
-                    $locationSql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', 'NA','$locationData','NA')";
+                    $locationSql = "INSERT INTO `answers` (`answer_id`, `quiz_id`, `respondent_id`,`choice_id`,`answer`,`text`) VALUES (NULL,'$queryId', '$respondent_id', 'COUNTY','$locationData','NA')";
                     $d=mysqli_query($conn, $locationSql);
                     
                 }
            }
         }
-        header("location:sectionTwo.php");
+        // header("location:sectionTwo.php");
     }
 }
 
@@ -235,7 +234,7 @@ if(!$_COOKIE["respondent_id"]) {
                     if ($row1['type'] == "input") {
                         echo
                         '<div class="inputholder">
-                            <textarea name="'.$row1['quiz_id'].'" placeholder="Type your Answer" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea><br>
+                            <textarea name="'.$row1['quiz_id'].'" placeholder="Type your Answer" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea><br>
                          </div>';
                     }
 
@@ -257,13 +256,15 @@ if(!$_COOKIE["respondent_id"]) {
                         if (mysqli_num_rows($radioQ) > 0) {
                      
                             while ($rowRadio = mysqli_fetch_array($radioQ)) {
-                                if($rowRadio['choice'] == "Other")
-                                {
-                                    echo '<div class="radioholder m-1" style="margin-left:100px;"><input type="radio" style="border:none;border-bottom:1px solid green;" name="' . $row1['quiz_id'] . '" id='.$rowRadio['id'].'>
+                  
+                                if($rowRadio['choice_type'] == "Other"){
+                                    $divid="Other".$row1['quiz_id'];
+                                    echo '<div class="radioholder m-1"  id='.$row1['quiz_id'].' style="margin-left:100px;"><input type="radio" onclick="test('.$row1['quiz_id'].','.$rowRadio['id'].')" style="border:none;border-bottom:1px solid green;" name="' . $row1['quiz_id'] . '"  id='.$rowRadio['id'].'>
                                     <label for='.$rowRadio['id'].'>Other(Specify)</label>
-                                    <input type="text" style="border:none;border-bottom:1px solid green;width:50%;" name="' . $row1['quiz_id'].'"></div>';
+                                    <input type="radio" name="Other'. $row1['quiz_id'] .'" id='.$rowRadio['id'].'>
+                                    </div>';
                                 }
-                                else{
+                                else  if($rowRadio['choice_type'] == "NA"){
                                 echo '<div class="radioholder m-1">
                                 <input type="radio" value="' . $rowRadio['id'] . '" name="' . $row1['quiz_id'] . '" id='.$rowRadio['id'].'><label id="optionId" for='.$rowRadio['id'].' style="margin-left:10px; width:70%">' . '    ' . $rowRadio['choice'] . '<br>
                                 </label></div>';
@@ -277,12 +278,12 @@ if(!$_COOKIE["respondent_id"]) {
                         $locationData = "select * from counties";
                         $locationQ = mysqli_query($conn, $locationData);
                         if (mysqli_num_rows($locationQ) > 0) {
-                            echo '<input class="form-control" list="datalistOptions" id="exampleDataList" name="location" placeholder="Type to search...">
-                            <datalist id="datalistOptions">';
+                            echo '<select class="form-control"  name="location" required>
+                            <option>Choose Current County</option>';
                             while ($rowLocation = mysqli_fetch_array($locationQ)) {
-                                echo '<option value="' . $rowLocation['name'] . '">';
+                                echo '<option value="'. $rowLocation['id'] .'">'.$rowLocation['name'].'</option>';
                             }
-                            echo '</datalist>';
+                            echo '</select>';
                         }
                     }
                     else if ($row1['type'] == "radio" && $row['group_type'] == "normal") {
@@ -294,9 +295,8 @@ if(!$_COOKIE["respondent_id"]) {
                             while ($rowRadio = mysqli_fetch_array($radioQ)) {
                           
                                 echo '<div style="margin-left:20px;" class="radioholder m-2">
-                                <input type="radio" value="' . $rowRadio['id'] . '" name="' . $row1['quiz_id'] . '" id='.$rowRadio['id'].'><label for='.$rowRadio['id'].' style="margin-left:10px;">' . '    ' . $rowRadio['choice'] . '<br>
-                                </label></div>';
-                            
+                                <input type="radio" value="' . $rowRadio['id'] . '" name="' . $row1['quiz_id'] . '" id='.$rowRadio['id'].' required><label for='.$rowRadio['id'].' style="margin-left:10px;">' . '    ' . $rowRadio['choice'] . '<br>
+                                </label></div>';    
                         }
                         }
                     }
@@ -308,7 +308,7 @@ if(!$_COOKIE["respondent_id"]) {
                             while ($rowRadio = mysqli_fetch_array($radioQ)) {
                                 
                                 echo '<li>
-                                <input type="radio" value="' . $rowRadio['id'] . '" name="' . $row1['quiz_id'] . '" id='.$rowRadio['id'].'><label for='.$rowRadio['id'].' style="margin-left:10px;color:#143fdb;">' . '    ' . $rowRadio['choice'] . '<br>
+                                <input type="radio" value="' . $rowRadio['id'] . '" name="' . $row1['quiz_id'] . '" id='.$rowRadio['id'].' required><label for='.$rowRadio['id'].' style="margin-left:10px;color:#143fdb;" required>' . '    ' . $rowRadio['choice'] . '<br>
                                 </label></li>';
                                
                             }
@@ -332,12 +332,18 @@ if(!$_COOKIE["respondent_id"]) {
             $q=mysqli_query($conn,$sqlSection);
             $rowSection = mysqli_fetch_assoc($q);
               echo '<div style="height: 100px; text-align:center" class="col-lg-12 w-5 shadow col-md-12"><a href="test1.php?section_id='.$next_id.'"  id="open_section_link"> next:->' . $rowSection['section_title'] . '</a></div>';
-            
           ?>
            </div>
         </div>
     </div>
     <script>
+        function test(x,y){
+            alert(y + ""+x);
+           var inpuBox ='<input type="text" style="border:none;border-bottom:1px solid green;width:50%;" name="'+x+'">';
+           $(document).ready(function() {
+                $("#"+y).append(inpuBox);
+            });
+    }
         var submitBtn = document.getElementById("submitBtn");
         $(document).on('click','td',function(){
     $(this).find('input [type="radio"]').prop('checked',true)

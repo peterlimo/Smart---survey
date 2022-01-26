@@ -56,23 +56,23 @@ session_start();
         </nav>
 
         <div class="row">
-            <div class="col-lg-2">
-                <a href="checkbox.php">Check Box</a>
+        <div class="col-lg-2">
+                <a class="btn btn-primary" href="checkbox.php">Check Box</a>
             </div>
             <div class="col-lg-2">
-                <a href="radiobutton.php">Radio Buttons</a>
+                <a class="btn btn-primary" href="radiobutton.php">Radio Buttons</a>
             </div>
             <div class="col-lg-2">
-                <a href="normalinput.php">Normal Input</a>
+                <a class="btn btn-primary" href="normalinput.php">Normal Input</a>
             </div>
             <div class="col-lg-2">
-                <a href="groupquiz.php">Group Question</a>
+                <a class="btn btn-primary" href="groupquiz.php">Group Question</a>
             </div>
             <div class="col-lg-2">
-                <a href="createGroup.php">Create group</a>
+                <a class="btn btn-primary" href="createGroup.php">Create group</a>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-5">
             <h5>Create a Question Group.</h5>
         </div>
         <form action="createGroup.php" method="post">

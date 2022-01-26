@@ -4,6 +4,7 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,38 +19,75 @@ session_start();
 
     <?php
     require('../connection.php');
-        if(isset($_POST['submit']))
-        {
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $sql = "INSERT INTO `programs` (`program_id`, `title`, `description`) VALUES (NULL, '$title', '$description');";
-            $query = mysqli_query($conn, $sql);
-            if ($query) {
-                $last_id = mysqli_insert_id($conn);
-                echo $last_id;
-                $_SESSION["program_id"] = $last_id;
+    if (isset($_POST['submit'])) {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $sql = "INSERT INTO `programs` (`program_id`, `title`, `description`) VALUES (NULL, '$title', '$description');";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            $last_id = mysqli_insert_id($conn);
+            echo $last_id;
+            $_SESSION["program_id"] = $last_id;
 
-                header("location:createQuiz.php");
-            }
+            header("location:createQuiz.php");
         }
+    }
     ?>
 </head>
+
 <body>
     <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light mb-4">
+            <a class="navbar-brand" href="#"><img src="logo-blue.png" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="createQuiz.php">Creat Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="fTogetherQuiz.php">Answer Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="statistics.php">Statistics</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="row">
-        <h2>Create new Program</h2>
-        <form action="index.php" method="post">
-            <div class="form-group">
-                <label for="exampleInputEmail1">Program Title</label>
-                <input type="text" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Program title" name="title">
+            <div class="col-lg-2">
+                <a class="btn btn-primary" href="checkbox.php">Check Box</a>
             </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Program Description</label>
-                <input type="text" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Program description" name="description">
+            <div class="col-lg-2">
+                <a class="btn btn-primary" href="radiobutton.php">Radio Buttons</a>
             </div>
-            <input name="submit" type="submit" class="btn btn-primary mt-3"></button>
-        </form>
+            <div class="col-lg-2">
+                <a class="btn btn-primary" href="normalinput.php">Normal Input</a>
+            </div>
+            <div class="col-lg-2">
+                <a class="btn btn-primary" href="groupquiz.php">Group Question</a>
+            </div>
+            <div class="col-lg-2">
+                <a class="btn btn-primary" href="createGroup.php">Create group</a>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <h2>Create new Program</h2>
+            <form action="index.php" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Program Title</label>
+                    <input type="text" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Program title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Program Description</label>
+                    <input type="text" class="form-control mt-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Program description" name="description">
+                </div>
+                <input name="submit" type="submit" class="btn btn-primary mt-3"></button>
+            </form>
         </div>
     </div>
 </body>
+
 </html>

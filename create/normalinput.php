@@ -17,25 +17,25 @@ session_start();
 
     <?php
     require("../connection.php");
-    
-    $program_id=1;
+
+    $program_id = 1;
     if (isset($_POST['submit'])) {
         $quiz = $_POST['quiz'];
         $question_section = $_POST['question_section'];
         $answerType = "input";
-        $g ="NA";
-        $t="NA";
+        $g = "NA";
+        $t = "NA";
         $sqll = "INSERT INTO `quiz_group` (`group_id`, `group_title`, `group_type`) VALUES ('', '$g','$t');";
         $queryw = mysqli_query($conn, $sqll);
-        if($queryw){
-        $group_id = mysqli_insert_id($conn);
-        $sql = "INSERT INTO `quiz` (`quiz_id`,`section_id`,`program_id`,`group_id`,`quiz`, `type`,`group_type`)  VALUES(NULL,'$question_section','$program_id','$group_id','$quiz','$answerType','$g');";
-        $query = mysqli_query($conn, $sql);
-        if ($query) {
-            $last_id = mysqli_insert_id($conn);
-            echo "Records submitted successfully:-".$last_id;
+        if ($queryw) {
+            $group_id = mysqli_insert_id($conn);
+            $sql = "INSERT INTO `quiz` (`quiz_id`,`section_id`,`program_id`,`group_id`,`quiz`, `type`,`group_type`)  VALUES(NULL,'$question_section','$program_id','$group_id','$quiz','$answerType','$g');";
+            $query = mysqli_query($conn, $sql);
+            if ($query) {
+                $last_id = mysqli_insert_id($conn);
+                echo "Records submitted successfully:-" . $last_id;
+            }
         }
-    }
     }
     ?>
 </head>
@@ -63,24 +63,24 @@ session_start();
         </nav>
 
         <div class="row">
-        <div class="col-lg-2">
-                <a href="checkbox.php">Check Box</a>
+            <div class="col-lg-2">
+                <a class="btn btn-primary" href="checkbox.php">Check Box</a>
             </div>
             <div class="col-lg-2">
-                <a href="radiobutton.php">Radio Buttons</a>
+                <a class="btn btn-primary" href="radiobutton.php">Radio Buttons</a>
             </div>
             <div class="col-lg-2">
-                <a href="normalinput.php">Normal Input</a>
+                <a class="btn btn-primary" href="normalinput.php">Normal Input</a>
             </div>
             <div class="col-lg-2">
-                <a href="groupquiz.php">Group Question</a>
+                <a class="btn btn-primary" href="groupquiz.php">Group Question</a>
             </div>
             <div class="col-lg-2">
-                <a href="createGroup.php">Create group</a>
+                <a class="btn btn-primary" href="createGroup.php">Create group</a>
             </div>
         </div>
-        <div class="row">
-            <h5>Create A Normal Input Box Question.</h5>
+        <div class="row mt-5">
+            <h5>Input Box Question.</h5>
         </div>
         <form action="normalinput.php" method="post">
             <span class="collapse" id="counter">0</span>
@@ -119,7 +119,7 @@ session_start();
             </div>
             <input name="submit" type="submit" class="btn btn-primary mt-3"></button>
         </form>
-      
+
     </div>
 </body>
 <script>
@@ -134,7 +134,7 @@ session_start();
         document.getElementById('counter').innerText = counter;
         inputC.setAttribute('value', counter);
     }
-   
+
 
     $("select[name=answerType]").focus(function() {
         previous = this.value;
